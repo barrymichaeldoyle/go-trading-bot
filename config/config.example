@@ -1,0 +1,7 @@
+// Replace this file with your own config.go file.
+package config
+
+var (
+	API_KEY    = "YOUR_API_KEY"
+	API_SECRET = "YOUR_API_SECRET"
+)

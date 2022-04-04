@@ -7,6 +7,7 @@ import (
 
 func main() {
 	fmt.Println("Running BTC DCA CRONJOB")
+	fmt.Println("Market Order BUY R140 worth of BTC")
 	go apis.PostMarketOrder(apis.PostMarketOrderOptions{
 		Side:        "BUY",
 		QuoteAmount: "140",

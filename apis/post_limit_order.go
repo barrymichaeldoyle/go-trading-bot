@@ -3,6 +3,7 @@ package apis
 
 import (
 	"encoding/json"
+	"go-trading-bot/config"
 	"go-trading-bot/libs"
 	"io/ioutil"
 	"net/http"
@@ -42,7 +43,7 @@ func PostLimitOrder(options PostLimitOrderOptions) (*PostLimitOrderResponse, err
 		return nil, err
 	}
 	req.Header.Add("Content-Type", "application/json")
-	req.Header.Add("X-VALR-API-KEY", libs.GoDotEnvVariable("API_KEY"))
+	req.Header.Add("X-VALR-API-KEY", config.API_KEY)
 	req.Header.Add("X-VALR-SIGNATURE", signature)
 	req.Header.Add("X-VALR-TIMESTAMP", timestamp)
 

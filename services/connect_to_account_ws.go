@@ -3,6 +3,7 @@ package services
 import (
 	"encoding/json"
 	"fmt"
+	"go-trading-bot/config"
 	"go-trading-bot/libs"
 	"go-trading-bot/tasks"
 	"go-trading-bot/types"
@@ -35,7 +36,7 @@ func ConnectToAccountWS() {
 
 	timestamp := libs.GetCurrentTimestampString()
 	socket := gowebsocket.New("wss://api.valr.com/ws/account")
-	socket.RequestHeader.Set("X-VALR-API-KEY", libs.GoDotEnvVariable("API_KEY"))
+	socket.RequestHeader.Set("X-VALR-API-KEY", config.API_KEY)
 	socket.RequestHeader.Set("X-VALR-SIGNATURE", libs.SignRequest(timestamp, "GET", "/ws/account", ""))
 	socket.RequestHeader.Set("X-VALR-TIMESTAMP", timestamp)
 

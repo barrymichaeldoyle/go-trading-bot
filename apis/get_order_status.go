@@ -5,6 +5,7 @@ package apis
 import (
 	"encoding/json"
 	"errors"
+	"go-trading-bot/config"
 	"go-trading-bot/libs"
 	"io/ioutil"
 	"net/http"
@@ -65,7 +66,7 @@ func GetOrderStatus(options GetOrderStatusOptions) (*GetOrderStatusResponse, err
 
 	timestamp := libs.GetCurrentTimestampString()
 	signature := libs.SignRequest(timestamp, method, endpoint, "")
-	req.Header.Add("X-VALR-API-KEY", libs.GoDotEnvVariable("API_KEY"))
+	req.Header.Add("X-VALR-API-KEY", config.API_KEY)
 	req.Header.Add("X-VALR-SIGNATURE", signature)
 	req.Header.Add("X-VALR-TIMESTAMP", timestamp)
 
