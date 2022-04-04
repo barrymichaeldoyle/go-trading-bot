@@ -3,7 +3,6 @@ package apis
 
 import (
 	"encoding/json"
-	"fmt"
 	"go-trading-bot/libs"
 	"io/ioutil"
 	"net/http"
@@ -34,7 +33,6 @@ func PostLimitOrder(options PostLimitOrderOptions) (*PostLimitOrderResponse, err
 		return nil, err
 	}
 	optionsString := string(out)
-	fmt.Println("OPTIONS!!", optionsString)
 	payload := strings.NewReader(optionsString)
 
 	timestamp := libs.GetCurrentTimestampString()
@@ -64,6 +62,5 @@ func PostLimitOrder(options PostLimitOrderOptions) (*PostLimitOrderResponse, err
 	if err := json.Unmarshal(body, output); err != nil {
 		return nil, err
 	}
-	fmt.Println("OUTPUT!!!", output.Id)
 	return output, nil
 }

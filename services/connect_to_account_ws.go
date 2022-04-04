@@ -66,7 +66,6 @@ func ConnectToAccountWS() {
 	}
 
 	socket.OnTextMessage = func(message string, socket gowebsocket.Socket) {
-		fmt.Println("Recieved message " + message)
 		genericMessage := &types.GenericaMessage{}
 		if err := json.Unmarshal([]byte(message), genericMessage); err != nil {
 			panic(err)
@@ -87,6 +86,7 @@ func ConnectToAccountWS() {
 				}
 			}
 		case "PONG":
+			fmt.Println("Received PONG")
 		default:
 		}
 	}
