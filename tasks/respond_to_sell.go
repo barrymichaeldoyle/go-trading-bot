@@ -30,7 +30,8 @@ func RespondToSell(data types.OrderStatusUpdateData) string {
 	fmt.Println("Created BUY order for " +
 		data.ExecutedQuantity +
 		libs.GetBaseCurrencyFromPair(data.CurrencyPair) +
-		" @R" +
+		" @" +
+		libs.GetFiatSymbolFromCurrencyPair(data.CurrencyPair) +
 		newPrice,
 	)
 
