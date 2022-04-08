@@ -39,6 +39,7 @@ func ConnectToAccountWS() {
 	socket.RequestHeader.Set("X-VALR-API-KEY", config.API_KEY)
 	socket.RequestHeader.Set("X-VALR-SIGNATURE", libs.SignRequest(timestamp, "GET", "/ws/account", ""))
 	socket.RequestHeader.Set("X-VALR-TIMESTAMP", timestamp)
+	socket.Connect()
 
 	socket.OnConnected = func(socket gowebsocket.Socket) {
 		fmt.Println("Connected to account ws")
@@ -47,6 +48,15 @@ func ConnectToAccountWS() {
 
 	socket.OnConnectError = func(err error, socket gowebsocket.Socket) {
 		fmt.Println("Received account ws connect error ", err)
+		fmt.Println("Trying again in 30 seconds")
+		for {
+			<-time.After(30 * time.Second)
+			fmt.Println("Trying Now")
+			timestamp := libs.GetCurrentTimestampString()
+			socket.RequestHeader.Set("X-VALR-SIGNATURE", libs.SignRequest(timestamp, "GET", "/ws/account", ""))
+			socket.RequestHeader.Set("X-VALR-TIMESTAMP", timestamp)
+			socket.Connect()
+		}
 	}
 
 	socket.OnBinaryMessage = func(data []byte, socket gowebsocket.Socket) {
@@ -63,6 +73,10 @@ func ConnectToAccountWS() {
 
 	socket.OnDisconnected = func(err error, socket gowebsocket.Socket) {
 		fmt.Println("Disconnected from accounts ws ")
+		timestamp := libs.GetCurrentTimestampString()
+		socket.RequestHeader.Set("X-VALR-SIGNATURE", libs.SignRequest(timestamp, "GET", "/ws/account", ""))
+		socket.RequestHeader.Set("X-VALR-TIMESTAMP", timestamp)
+		socket.Connect()
 		return
 	}
 
@@ -91,8 +105,6 @@ func ConnectToAccountWS() {
 		default:
 		}
 	}
-
-	socket.Connect()
 
 	for {
 		select {

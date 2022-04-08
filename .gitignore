@@ -3,3 +3,4 @@ config/config.go
 btc_dca_cronjob
 go-trading-bot
 main
+.DS_Store
